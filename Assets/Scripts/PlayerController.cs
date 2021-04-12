@@ -26,14 +26,14 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        if(Input.GetMouseButtonDown(0) && jumpCount < 2)
+        if (Input.GetMouseButtonDown(0) && jumpCount < 2)
         {
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce));
             playerAudio.Play();
         }
-        else if(Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
         }
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Dead" && !isDead)
+        if (other.tag == "Dead" && !isDead)
         {
             Die();
         }
@@ -55,11 +55,12 @@ public class PlayerController : MonoBehaviour
         playerAudio.Play();
         playerRigidbody.velocity = Vector2.zero;
         isDead = true;
+        GameManager.instance.OnPlayerDead();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.contacts[0].normal.y > 0.7f)
+        if (collision.contacts[0].normal.y > 0.7f)
         {
             isGrounded = true;
             jumpCount = 0;
